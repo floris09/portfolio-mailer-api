@@ -13,7 +13,14 @@ const server = http.Server(app)
 app
   .use(bodyParser.urlencoded({ extended: true }))
   .use(bodyParser.json())
-  .use(cors({origin: null}))
+  .use(cors())
+  .use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', 'http://florismeininger.herokuapp.com');
+    res.setHeader('Access-Control-Allow-Methods', 'POST');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    next();
+      });
   .use(mailer)
 
 app.get('/', (req, res) => {
