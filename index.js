@@ -11,7 +11,13 @@ let app = express()
 const server = http.Server(app)
 
 app
-  .use(cors())
+  .use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', 'https://florismeininger.herokuapp.com');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    next();
+      });
   .use(bodyParser.urlencoded({ extended: true }))
   .use(bodyParser.json())
   .use(function (req, res, next) {
