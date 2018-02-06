@@ -1,0 +1,10 @@
+{
+  "name": "portfolio-api",
+  "version": "1.0.0",
+  "description": "api to manage mailer",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}
