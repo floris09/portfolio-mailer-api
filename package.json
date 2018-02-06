@@ -4,7 +4,11 @@
   "description": "api to manage mailer",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "start": "node ."
+  },
   "dependencies": {
-    "express": "^4.16.2"
+    "express": "^4.16.2",
+    "nodemailer": "^4.4.2"
   }
 }
