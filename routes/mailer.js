@@ -17,7 +17,7 @@ router
 
     const mailOptions = {
       from: body.email, // sender address
-      to: 'florismeininger@gmail.com', // list of receivers
+      to: process.env.EMAIL, // list of receivers
       subject: 'New mail from your portfolio website', // Subject line
       html: `<p>New message from ${body.firstName} ${body.lastName}.<br>Phone number: ${body.phone} <br>Email address: ${body.email}. <br>Message: ${body.message} </p>`// plain text body
     };
