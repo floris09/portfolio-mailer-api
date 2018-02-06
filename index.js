@@ -13,7 +13,7 @@ const server = http.Server(app)
 app
   .use(bodyParser.urlencoded({ extended: true }))
   .use(bodyParser.json())
-  .use(cors({origin: '*'}))
+  .use(cors({origin: null}))
   .use(mailer)
 
 app.get('/', (req, res) => {
