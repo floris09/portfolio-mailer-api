@@ -11,7 +11,7 @@ let app = express()
 const server = http.Server(app)
 
 app
-  .use(cors({credentials: true}))
+  .use(cors())
   .use(bodyParser.urlencoded({ extended: true }))
   .use(bodyParser.json())
   .use(mailer)
