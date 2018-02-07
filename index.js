@@ -11,7 +11,7 @@ const app = express()
 const server = http.Server(app)
 
 app
-  .use(cors())
+  .use(cors({origin: 'https://florismeininger.herokuapp.com'}))
   .use(bodyParser.urlencoded({ extended: true }))
   .use(bodyParser.json())
   .use(mailer)
