@@ -5,30 +5,37 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 
 
-const port = process.env.PORT || 3030
+const PORT = process.env.PORT || 3030
 
-const app = express()
+let app = express()
 const server = http.Server(app)
 
 app
-  .use(cors({origin: 'https://florismeininger.herokuapp.com'}))
   .use(bodyParser.urlencoded({ extended: true }))
   .use(bodyParser.json())
+  .use(cors())
+  .use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', 'https://florismeininger.herokuapp.com');
+
+    // Request methods you wish to allow
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+    // Request headers you wish to allow
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+
+    // Set to true if you need the website to include cookies in the requests sent
+    // to the API (e.g. in case you use sessions)
+    res.setHeader('Access-Control-Allow-Credentials', true);
+
+    // Pass to next layer of middleware
+    next();
+});
   .use(mailer)
 
+app.get('/', (req, res) => {
+  res.send('Hello from Express!')
+})
 
-  .use((req, res, next) => {
-    const err = new Error('Not Found')
-    err.status = 404
-    next(err)
-  })
-
-  .use((err, req, res, next) => {
-    res.status(err.status || 500)
-    res.send({
-      message: err.message,
-      error: app.get('env') === 'development' ? err : {}
-    })
-  })
-
-server.listen(port)
+app.listen(PORT, () => {
+  console.log(`Server is listening on port ${PORT}`)
+})
