@@ -11,11 +11,8 @@ let app = express()
 const server = http.Server(app)
 
 app
-  .use(bodyParser.urlencoded({ extended: true }))
-  .use(bodyParser.json())
-  .use(cors())
   .use(function (req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', 'https://florismeininger.herokuapp.com');
+    res.setHeader('Access-Control-Allow-Origin', '*');
 
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -29,7 +26,9 @@ app
 
     // Pass to next layer of middleware
     next();
-});
+  });
+  .use(bodyParser.urlencoded({ extended: true }))
+  .use(bodyParser.json())
   .use(mailer)
 
 app.get('/', (req, res) => {
