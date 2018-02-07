@@ -5,9 +5,9 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 
 
-const PORT = process.env.PORT || 3030
+const port = process.env.PORT || 3030
 
-let app = express()
+const app = express()
 const server = http.Server(app)
 
 app
@@ -16,10 +16,19 @@ app
   .use(bodyParser.json())
   .use(mailer)
 
-app.get('/', (req, res) => {
-  res.send('Hello from Express!')
-})
 
-app.listen(PORT, () => {
-  console.log(`Server is listening on port ${PORT}`)
-})
+  .use((req, res, next) => {
+    const err = new Error('Not Found')
+    err.status = 404
+    next(err)
+  })
+
+  .use((err, req, res, next) => {
+    res.status(err.status || 500)
+    res.send({
+      message: err.message,
+      error: app.get('env') === 'development' ? err : {}
+    })
+  })
+
+server.listen(port)
